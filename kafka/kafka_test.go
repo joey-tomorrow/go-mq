@@ -172,5 +172,5 @@ func TestKafka_Consume(t *testing.T) {
 	})
 
 	assert.Nil(t, err)
-	time.Sleep(200 * time.Second)
+	time.Sleep(20 * time.Second)
 }

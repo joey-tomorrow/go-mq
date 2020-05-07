@@ -143,7 +143,15 @@ func doTimeOut(delivery *util.Delivery) {
 
 		if pm.Msg.SendTime.Add(time.Duration(_ConfirmTimeout) * time.Second).Before(time.Now()) {
 			if pm.Callback != nil {
-				pm.Callback(pm.Msg, util.ErrMsgTimeout)
+				go func(pubMsg util.PubMsg) {
+					defer func() {
+						if e := recover(); e != nil {
+							kafkaError.PrintlnErrorMessage("doTimeOut callback failed %v", e)
+						}
+					}()
+
+					pubMsg.Callback(pubMsg.Msg, util.ErrMsgTimeout)
+				}(pm)
 			}
 			delivery.DeliveryMap.Remove(m.Key)
 		}

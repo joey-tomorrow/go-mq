@@ -17,12 +17,7 @@ func InitKafkaFromPath(path string) (kafka *Kafka, err error) {
 		return nil, err
 	}
 
-	err = InitKafka(cfg)
-	if err != nil {
-		return nil, err
-	}
-
-	return NewKafka(), nil
+	return InitKafka(cfg)
 }
 
 //LoadConfig 读取配置文件
@@ -52,7 +47,7 @@ func LoadConfig(path string) (*KafkaConfig, error) {
 
 //InitKafka 从配置结构体初始化
 //可以调用LoadConfig获取配置后，修改Connect中的kafka扩展配置，然后再调用此方法初始化
-func InitKafka(cfg *KafkaConfig) (err error) {
+func InitKafka(cfg *KafkaConfig) (kafka *Kafka, err error) {
 	Cfg = cfg
 
 	_ConfirmTimeout = cfg.ConfirmTimeout
@@ -74,7 +69,7 @@ func InitKafka(cfg *KafkaConfig) (err error) {
 
 	callbackProducer()
 
-	return nil
+	return NewKafka(), nil
 }
 
 func initConnect() (err error) {
