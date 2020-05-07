@@ -1,0 +1,7 @@
+Connects:
+  - {Name: myConnect, Addr: localhost:9092}
+Pushers:
+  - {Name: myPusher, Connect: myConnect, Topic: test}
+Pullers:
+  - {Name: myPoper, Connect: myConnect, Topic: test, GroupID: group-test}
+ConfirmTimeout: 1

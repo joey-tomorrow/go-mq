@@ -1,0 +1,6 @@
+Connects:
+  - {Name: 连接名称, Addr: 连接地址}
+Pushers:
+  - {Name: 消息生产者名称, Connect: 主题对应的连接名称, Topic: 主题名称}
+Popers:
+  - {Name: 消息消费者名称, Connect: 主题对应的连接名称, Topic: 主题名称, GroupId: 消费组ID}

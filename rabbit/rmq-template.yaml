@@ -1,0 +1,53 @@
+---
+注释-Connects:
+  - Name: 连接名称
+    Addr: 连接地址:amqp://username:password@IP:Port/vhost
+    Interval: 重连间隔时间 秒
+    Delay: 不配置或false，则不会开启延迟队列    【注意!!！如果没有安装延时插件，不要配置为true，否则会报错！】
+注释-Channels:
+  - Name: 信道名称
+    Connect: 信道所属连接
+    ConfirmNoWait: 异步确认模式 默认false开启  【注意！！！事务发送必须配置为true!!!】
+注释-Exchanges:
+  - Name: 交换机名称
+    Channel: 交换机所属信道
+    Type: 交换机类型['direct':'路由','topic':'通配符','fanout':'订阅','headers ':'头部']
+    Durable: 是否持久化(bool)
+    AutoDeleted: 是否自动删除(bool)
+    Internal: 只允许MQ内部使用(bool)
+    NoWait: 非阻塞模式(bool)
+    EBind:
+      - Destination: 目标交换机
+        Key: 路由键
+        NoWait: 非阻塞模式(bool)
+注释-Queue:
+  - Name: 队列名称
+    Durable: 是否持久化(bool)
+    AutoDelete: 是否自动删除(bool)
+    Exclusive: 排他性,只允许创建队列的用户访问(bool)
+    NoWait: 非阻塞模式(bool)
+    配置此项默认支持重试-Retry:
+      Times: 消息消费失败重试次数
+      Interval: 重试间隔
+    Bind:
+      - Key: 路由键
+        ExchangeName: 交换机
+        NoWait: 非阻塞模式(bool)
+注释-Pusher-发送者:
+  - Name: 名称
+    Channel: 所属信道
+    Exchange: 交换机
+    Key: 路邮键
+    Mandtory: "(bool) 当路由找不到对应的队列时，返回通知客户端"
+    Immediate: "(bool) 不建议使用3.0版本已废弃"
+    ContentType: 消息类型
+    DeliveryMode: 是否持久化，2表示持久化，0表示非持久化(uint8)
+注释-Poper--接收者:
+  - Name: 名称
+    Channel: 所属信道
+    QName: 队列名称
+    Consumer: 消费者
+    AutoACK: 自动确认(bool)
+    Exclusive: 排他性(bool)
+    NoLocal: 非本地(bool)
+    NoWait: 非阻塞模式(bool)

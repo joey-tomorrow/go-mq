@@ -1,0 +1,26 @@
+# by www.bejson.com
+Connects:
+  - {Name: myConnect, Addr: 'amqp://mq:mq123@10.12.128.13', Delay: true}
+Channels:
+  - {Name: myChannel, Connect: myConnect, QosCount: 10}
+  - {Name: txChannel, Connect: myConnect, QosCount: 1, ConfirmNoWait: true}
+Exchanges:
+  - Name: myExg03
+    Channel: myChannel
+    Type: direct
+    Durable: true
+Queue:
+  - Name: myQueue01
+    Channel: myChannel
+    Durable: true
+    Bind:
+      - {Key: myQueue01, ExchangeName: myExg03, NoWait: false}
+    Retry: {Times: 3, Interval: 10}
+Pusher:
+  - {Name: myPusher, Channel: myChannel, Exchange: myExg03, Key: myQueue01}
+  - {Name: myTxPusher, Channel: txChannel, Exchange: myExg03, Key: myQueue01}
+Puller:
+  - {Name: myPoper, Channel: myChannel, QName: myQueue01, Consumer: '', AutoACK: false,
+     Exclusive: false, NoLocal: true, NoWait: false}
+
+
