@@ -5,6 +5,7 @@
    - [x] Kafka
  - [x] 支持中...
     - [ ] RocketMQ
+    - [ ] Pulsar
  
  # 使用方法
 
