@@ -10,29 +10,15 @@
 
  使用rabbitmq
  ```
- 1、注册
- mq.MustInitRabbit()
- 
- 2、使用
- RabbitMq       mqbiz.IMessageQueue   `inject:"rabbit"`
- 或
- rabbit.GetInstance()
+ 参见 rmq_test.go
  ```
 
  使用kafka
   ```
-  1、注册
-  mq.MustInitKafka()
+  参见 kafka_test.go
   
-  或
-  cfg := InitKafkaConfig()
-  //cfg中的Connect有sarama.Config 可以在这一步修改
-  MustInitKafkaWithConfig(cfg)
-  
-  2、使用
-  Kafka       mqbiz.IMessageQueue   `inject:"kafka"`
-  或
-  kafka.GetInstance()
+  注意：如果需要修改配置信息，KafkaConfig中的Connect有OriginCfg属性，在这一步进行创建修改即可。
+  如果不设置OriginCfg,则会使用默认的配置信息。
   ```
  ## 接口
  ```

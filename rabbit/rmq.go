@@ -232,7 +232,17 @@ func doTimeout(v *util.Delivery) {
 			return
 		}
 		if pm.Msg.SendTime.Add(30 * time.Second).Before(time.Now()) {
-			pm.Callback(pm.Msg, util.ErrMsgTimeout)
+			if pm.Callback != nil {
+				go func(pubMsg util.PubMsg) {
+					defer func() {
+						if e := recover(); e != nil {
+							rabbitError.PrintlnErrorMessage("doTimeOut callback failed %v", e)
+						}
+					}()
+
+					pubMsg.Callback(pubMsg.Msg, util.ErrMsgTimeout)
+				}(pm)
+			}
 			v.DeliveryMap.Remove(m.Key)
 		}
 	}
